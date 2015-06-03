@@ -571,29 +571,6 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
                     currentParticle.setVelocity((int) round(newVelocity, 0)); // Setting
                     // V(i+1) as particle i's new velocity
                     /*--- If newVelocity exceeds the limit of graphSize, do a little intelligent velocity clamping ---*/
-                    if (newVelocity > graphSize) {
-                        int tempVel = (int) graphSize - prevVelocity;
-                        int half = tempVel / 2;
-                        if (scalarDiff1 > scalarDiff2) {
-                            int sDiff = scalarDiff1 - scalarDiff2;
-                            if (sDiff > half) {
-                                scalarDiff1 = (int) ((double) tempVel * 3 / 4.0);
-                                scalarDiff2 = (int) ((double) tempVel * 1 / 4.0);
-                            } else {
-                                scalarDiff1 = tempVel / 2;
-                                scalarDiff2 = tempVel / 2;
-                            }
-                        } else {
-                            int sDiff = scalarDiff2 - scalarDiff1;
-                            if (sDiff > half) {
-                                scalarDiff2 = (int) ((double) tempVel * 3 / 4.0);
-                                scalarDiff1 = (int) ((double) tempVel * 1 / 4.0);
-                            } else {
-                                scalarDiff1 = tempVel / 2;
-                                scalarDiff2 = tempVel / 2;
-                            }
-                        }
-                    }
                     EdgeSet g = computeNewPosition(currentParticle, diff1,
                             scalarDiff1, diff2, scalarDiff2); // X(i+1) = X(i) +
                     double newFitness = g.fitness();
