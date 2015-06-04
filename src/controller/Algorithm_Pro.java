@@ -465,10 +465,10 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
         edgeBankSize = edgeBank.size();
         Q = round(1.0 / (edgeBankSize), DP4) * 0.2;
         T = Q;
-        w = 1;
+        w = 4;
         K = round(graphSize / edgeBankSize, DP4);
-        c1 = 1.48;
-        c2 = 1.48;
+        c1 = 2.05;
+        c2 = 2.05;
         for (int i = 0; i < particleNo; i++) {
             EdgeSet dummyEdgeSet = new EdgeSet((int) graphSize,
                     EdgeSet.PARTICLE);
@@ -537,6 +537,7 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
             edgeBank.reset();
             System.out.println("Iteration: " + j);
             init((int) graphSize);
+            int k = 0;
             do {
                 if (!running) {
                     break;
@@ -551,8 +552,14 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
                     }
                 }
                 noOfIterations++;
+                k++;
                 double r1 = round(Math.random(), 1), r2 = round(Math.random(),
                         1);
+                /** Implementing Linear Decreasing Inertia Weight **/
+                double initW = 4;
+                double finalW = 2;
+                double maxT = graphSize * 23;
+                w = (initW - finalW) * (maxT - k)/maxT + finalW; // Linear Decreasing Inertia Weight
                 //w -= 1 / (graphSize * 30);
                 for (Particle swarm1 : swarm) {
                     currentParticle = swarm1;
