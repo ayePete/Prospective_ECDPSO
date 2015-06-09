@@ -557,7 +557,7 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
                         1);
                 /** Implementing Linear Decreasing Inertia Weight **/
                 double initW = 4;
-                double finalW = 2;
+                double finalW = 1;
                 double maxT = graphSize * 23;
                 w = (initW - finalW) * (maxT - k)/maxT + finalW; // Linear Decreasing Inertia Weight
                 //w -= 1 / (graphSize * 30);
@@ -575,6 +575,8 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
                     int prevVelocity = currentParticle.getVelocity();
                     double newVelocity = w * prevVelocity + scalarDiff1
                             + scalarDiff2; // Computing V(i+1)
+                    /** Implementing Constriction factor **/
+                    newVelocity *= 0.729;
                     currentParticle.setVelocity((int) round(newVelocity, 0)); // Setting
                     // V(i+1) as particle i's new velocity
                     /*--- If newVelocity exceeds the limit of graphSize, do a little intelligent velocity clamping ---*/
@@ -639,6 +641,7 @@ public class Algorithm_Pro extends SwingWorker<EdgeSet, EdgeSet> implements Subj
             diffSum += bests.get(i).fitness() - minGbest;
             bestSum +=  bests.get(i).fitness();
         }
+        
         averageBest = bestSum/50;
         double minDev = diffSum / 50;
         double totalTime = round(
